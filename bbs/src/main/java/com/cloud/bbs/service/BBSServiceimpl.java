@@ -1,5 +1,7 @@
 package com.cloud.bbs.service;
 import com.cloud.bbs.dto.BBSDto;
+import com.cloud.bbs.dto.FileDto;
+
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -8,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.cloud.bbs.dto.BBSDto;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
+import com.cloud.bbs.common.FileSaveHelper;
 import com.cloud.bbs.dao.BBSDao;
 
 @Service
@@ -17,6 +22,9 @@ public class BBSServiceimpl implements BBSService {
    
    @Autowired
    private BBSDao bbsDao;
+   
+   @Autowired
+   private FileSaveHelper fileSaveHelper;
 
    @Override
    public List<BBSDto> list() {
@@ -45,10 +53,21 @@ public class BBSServiceimpl implements BBSService {
 }
 
    @Override
-   public void write(BBSDto article) {
-      bbsDao.write(article);
-   
-      }
+   public void write(BBSDto article, List<MultipartFile> fileUpload) {
+	   System.out.println(article.getArticleNum());
+	   bbsDao.write(article);
+	   System.out.println(article.getArticleNum());
+	   if(!fileUpload.get(0).isEmpty()) {
+		   for(MultipartFile mf : fileUpload) {
+			   String savedFileName=fileSaveHelper.save(mf);
+			   FileDto fileDto = new FileDto();
+			   fileDto.setOriginalFileName(mf.getOriginalFilename());
+			   fileDto.setSavedFileName(savedFileName);
+			   fileDto.setArticleNum(article.getArticleNum());
+			   bbsDao.insertFile(fileDto);
+		   }
+	   }
+   }
 
    
    @Override

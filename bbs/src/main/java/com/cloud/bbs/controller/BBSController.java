@@ -1,15 +1,18 @@
 package com.cloud.bbs.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.cloud.bbs.dto.BBSDto;
 import com.cloud.bbs.service.BBSService;
@@ -36,10 +39,11 @@ public class BBSController {
 	}
 	
 	@PostMapping("/write.bbs")
-	public String write(BBSDto article, HttpSession session) {
+	public String write(BBSDto article, @RequestPart("fileUpload") List<MultipartFile> fileUpload,
+			HttpSession session) {
 //	public String write(@RequestParam("title") String title, @RequestParam("content") String content) {
 //	public String write(@RequestParam String title, @RequestParam String content) {
-		bbsService.write(article);
+		bbsService.write(article, fileUpload);
 		return "redirect:/list.bbs";
 	}
 

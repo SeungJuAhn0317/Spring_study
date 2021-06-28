@@ -8,6 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.cloud.bbs.dto.BBSDto;
+import com.cloud.bbs.dto.FileDto;
 
 @Repository
 public class BBSDaoimpl implements BBSDao {
@@ -55,6 +56,12 @@ public class BBSDaoimpl implements BBSDao {
 	@Override
 	public void delete(String articleNum) {
 		sqlSession.delete(nameSpace+".delete", articleNum);		
+	}
+
+	@Override
+	public void insertFile(FileDto fileDto) {
+		sqlSession.insert(nameSpace + ".insertFile", fileDto);
+		
 	}
 
 	

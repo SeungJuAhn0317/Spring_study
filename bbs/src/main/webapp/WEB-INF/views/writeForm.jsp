@@ -25,7 +25,7 @@
 			</tr>
 			<tr>
 				<td colspan="2">
-				<input type="file" multiple="multiple" value="파일을 선택하세요">
+				<input type="file" name="fileUpload" multiple="multiple" value="파일을 선택하세요">
 				</td>
 			</tr>
 			<tr>

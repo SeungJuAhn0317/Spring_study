@@ -11,7 +11,7 @@
 		SELECT PASS FROM LOGIN WHERE ID=#{id}
 	</select>
 	
-	<insert id="write" parameterType="article">
+	<insert id="write" parameterType="article" useGeneratedKeys="true" keyProperty="articleNum" keyColumn="articleNum">
 	INSERT INTO BBS VALUES (bbs_seq.nextval, #{id}, #{title}, #{content}, sysdate)
 	
 	</insert>
@@ -31,4 +31,10 @@
 	<delete id="delete" parameterType="String">
 		DELETE FROM BBS WHERE articleNum=#{articleNum}
 	</delete>
+	
+	<insert id="insertFile" parameterType="file">
+	INSERT INTO FILELIST VALUES (file_seq.nextval, #{originalFileName}, #{savedFileName}, #{articleNum})
+	
+	</insert>
+	
 </mapper>
