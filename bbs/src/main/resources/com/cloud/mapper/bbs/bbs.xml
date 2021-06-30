@@ -20,6 +20,14 @@
 		SELECT * FROM BBS WHERE articleNum=#{articleNum}
 	</select>
 	
+	<select id="getOriginalFileName" parameterType="String" resultType="String">
+		SELECT originalFileName FROM fileList WHERE savedFileName=#{savedFileName}
+	</select>
+	
+	<select id="getFiles" parameterType="String" resultType="file">
+		 SELECT ORIGINALFILENAME, SAVEDFILENAME FROM FILELIST WHERE articleNum=#{articleNum}
+	</select>
+	
 	<select id="updateForm" parameterType="String" resultType="article">
 		SELECT articleNum, title, content FROM BBS WHERE articleNum=#{articleNum}
 	</select>

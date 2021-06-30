@@ -1,21 +1,20 @@
 package com.cloud.bbs.service;
-import com.cloud.bbs.dto.BBSDto;
-import com.cloud.bbs.dto.FileDto;
-
+import java.net.URLEncoder;
 import java.util.List;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import com.cloud.bbs.dto.BBSDto;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 import com.cloud.bbs.common.FileSaveHelper;
 import com.cloud.bbs.dao.BBSDao;
+import com.cloud.bbs.dto.BBSDto;
+import com.cloud.bbs.dto.FileDto;
 
 @Service
 public class BBSServiceimpl implements BBSService {
@@ -25,6 +24,9 @@ public class BBSServiceimpl implements BBSService {
    
    @Autowired
    private FileSaveHelper fileSaveHelper;
+   
+   @Resource(name="saveDir")
+	private String saveDir;
 
    @Override
    public List<BBSDto> list() {
@@ -68,14 +70,35 @@ public class BBSServiceimpl implements BBSService {
 		   }
 	   }
    }
+   
+   @Override
+   public FileSystemResource download(String savedFileName, HttpServletResponse response) {
+	   response.setContentType("application/download");
+	   String originalFileName=bbsDao.getOriginalFileName(savedFileName);
+	   try {
+		   originalFileName = URLEncoder.encode(originalFileName,"utf-8").replace("+","%20").replace("%28","(").replace("%29", ")");
+	   } catch(Exception e) {
+		   
+	   }
+	   
+	   response.setHeader("Content-Disposition", "attachment;" + " filename=\""+originalFileName+"\";");
+	   FileSystemResource fsr = new FileSystemResource(saveDir+savedFileName);
+	   return fsr;
+   }
 
    
    @Override
    public BBSDto content(String articleNum) {
    
    return bbsDao.content(articleNum);
+   }
    
-}
+   
+
+   @Override
+   public List<FileDto> getFiles(String articleNum) {
+	   return bbsDao.getFiles(articleNum);
+   }
 
    @Override
    public BBSDto updateForm(String articleNum) {

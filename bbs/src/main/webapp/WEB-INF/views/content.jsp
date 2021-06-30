@@ -15,6 +15,14 @@
     날짜 : ${article.writeDate}<br><br>
     <hr/>
     
+    <div>
+    	<ul>
+    	<c:forEach var="file" items="${fileList}">
+    		<li><a href="/bbs/download.bbs?savedFileName=${file.savedFileName}" >${file.originalFileName}</a></li>
+    	</c:forEach>
+    	</ul>
+    </div>
+    
     
     <c:if test="${id !=null}">
        <c:if test = "${id ==article.id}">

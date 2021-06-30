@@ -36,21 +36,28 @@ public class BBSDaoimpl implements BBSDao {
 	}
 
 	@Override
-	   public BBSDto content(String articleNum) {
-	      
-	      return sqlSession.selectOne(nameSpace+".content",articleNum);
-	   }
+	public BBSDto content(String articleNum) {
+		return sqlSession.selectOne(nameSpace+".content",articleNum);
+	}
 	   
-	   @Override
-	   public BBSDto updateForm(String articleNum) {
-	      
-	      return sqlSession.selectOne(nameSpace+".updateForm",articleNum);
-	   }
+	@Override
+	public String getOriginalFileName(String savedFileName) {
+		return sqlSession.selectOne(nameSpace+".getOriginalFileName",savedFileName);
+	}
+
+	@Override
+	public List<FileDto> getFiles(String articleNum) {
+		return sqlSession.selectList(nameSpace+".getFiles",articleNum);
+	}
+
+	@Override
+	public BBSDto updateForm(String articleNum) {
+		return sqlSession.selectOne(nameSpace+".updateForm",articleNum);
+	}
 
 	@Override
 	public void update(BBSDto article) {
 		sqlSession.update(nameSpace+".update",article);
-		
 	}
 
 	@Override
@@ -63,8 +70,5 @@ public class BBSDaoimpl implements BBSDao {
 		sqlSession.insert(nameSpace + ".insertFile", fileDto);
 		
 	}
-
-	
-	
 }
 
