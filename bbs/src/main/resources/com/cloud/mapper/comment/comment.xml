@@ -7,5 +7,12 @@
 	<select id="test" parameterType="String" resultType="String">
 		SELECT PASS FROM LOGIN WHERE ID=#{id}
 	</select>
-
+	
+	<insert id="commentWrite" parameterType="comment">
+	INSERT INTO COMMENTS VALUES (comment_seq.nextval, #{id}, #{commentContent}, sysdate, #{articleNum})
+	</insert>
+	
+	<select id="getComments" parameterType="Integer" resultType="comment">
+		SELECT COMMENTNUM, ID, COMMENTCONTENT, COMMENTDATE FROM COMMENTS WHERE ARTICLENUM=#{articleNum}
+	</select>
 </mapper>

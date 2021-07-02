@@ -1,6 +1,10 @@
 package com.cloud.bbs.dao1;
 
-public interface CommentDao {
-	public String test(String id);
+import java.util.List;
 
+import com.cloud.bbs.dto.CommentDto;
+
+public interface CommentDao {
+	public void commentWrite(CommentDto comment);
+	public List<CommentDto> getComments(int articleNum);
 }

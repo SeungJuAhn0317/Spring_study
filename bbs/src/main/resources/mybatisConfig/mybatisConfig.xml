@@ -18,6 +18,7 @@
 	<typeAliases>
 		<typeAlias alias="article" type="com.cloud.bbs.dto.BBSDto" />
 		<typeAlias alias="file" type="com.cloud.bbs.dto.FileDto" />
+		<typeAlias alias="comment" type="com.cloud.bbs.dto.CommentDto" />
 	</typeAliases>
 </configuration>
 	

@@ -1,6 +1,11 @@
 package com.cloud.bbs.service;
 
+
+import java.util.List;
+
+import com.cloud.bbs.dto.CommentDto;
+
 public interface CommentService {
-	public void test();
+	public List<CommentDto> commentWrite(CommentDto comment);
 
 }
