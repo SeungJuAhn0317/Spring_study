@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cloud.bbs.dto.CommentDto;
@@ -22,9 +23,16 @@ public class CommentController {
 	
 	@PostMapping("/commentWrite.comment")
 	@ResponseBody
-	public List<CommentDto> commentWrite(CommentDto comment, HttpSession session, Model model) {
-	   comment.setId((String)session.getAttribute("id"));
-	   return commentService.commentWrite(comment);
+	public List<CommentDto> commentWrite(CommentDto comment, HttpSession session) {
+		comment.setId((String)session.getAttribute("id"));
+		return commentService.commentWrite(comment);
 	}
-
+	
+	@PostMapping("/commentRead.comment")
+	@ResponseBody
+	public List<CommentDto> commentRead(@RequestParam("articleNum") int articleNum,
+										@RequestParam("commentRow") int commentRow) {		
+		return commentService.commentRead(articleNum, commentRow);
+	}
+	
 }

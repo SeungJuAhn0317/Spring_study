@@ -1,5 +1,6 @@
 package com.cloud.bbs.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +19,21 @@ public class CommentServiceimpl implements CommentService {
    @Override
    public List<CommentDto> commentWrite(CommentDto comment) {
       commentDao.commentWrite(comment);
-      return commentDao.getComments(comment.getArticleNum());
+      HashMap<String, Integer> hm = new HashMap<>();
+	   hm.put("articleNum", comment.getArticleNum());
+	   hm.put("commentRow", 10);
+      return commentDao.getComments(hm);
       
    }
+
+   @Override
+   public List<CommentDto> commentRead(int articleNum, int commentRow) {
+	   HashMap<String, Integer> hm = new HashMap<>();
+	   hm.put("articleNum", articleNum);
+	   hm.put("commentRow", commentRow);
+	   return commentDao.getComments(hm);
+   }
+   
+   
 
 }

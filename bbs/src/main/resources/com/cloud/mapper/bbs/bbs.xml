@@ -20,6 +20,10 @@
 		SELECT * FROM BBS WHERE articleNum=#{articleNum}
 	</select>
 	
+	<select id="getCommentCount" parameterType="String" resultType="Integer">
+		SELECT count(*) FROM comments WHERE articleNum=#{articleNum}
+	</select>
+	
 	<select id="getOriginalFileName" parameterType="String" resultType="String">
 		SELECT originalFileName FROM fileList WHERE savedFileName=#{savedFileName}
 	</select>

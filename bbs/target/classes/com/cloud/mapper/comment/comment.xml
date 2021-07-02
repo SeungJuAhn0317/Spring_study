@@ -12,7 +12,10 @@
 	INSERT INTO COMMENTS VALUES (comment_seq.nextval, #{id}, #{commentContent}, sysdate, #{articleNum})
 	</insert>
 	
-	<select id="getComments" parameterType="Integer" resultType="comment">
-		SELECT COMMENTNUM, ID, COMMENTCONTENT, COMMENTDATE FROM COMMENTS WHERE ARTICLENUM=#{articleNum}
+	<select id="getComments" parameterType="HashMap" resultType="comment">
+		SELECT COMMENTNUM, ID, COMMENTCONTENT, COMMENTDATE FROM COMMENTS
+		WHERE ARTICLENUM=#{articleNum}
+		and rownum between 1 and #{commentRow}
+		order by commentNum desc
 	</select>
 </mapper>
