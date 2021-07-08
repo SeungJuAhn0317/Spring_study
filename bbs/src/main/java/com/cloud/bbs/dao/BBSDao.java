@@ -17,4 +17,5 @@ public interface BBSDao {
 	public void delete(String articleNum);
 	public void insertFile(FileDto fileDto);
 	public String getOriginalFileName(String savedFileName);
+	public int getTotalCount();
 }

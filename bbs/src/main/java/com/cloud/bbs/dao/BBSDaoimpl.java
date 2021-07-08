@@ -77,4 +77,10 @@ public class BBSDaoimpl implements BBSDao {
 		sqlSession.insert(nameSpace+".insertFile", fileDto);
 		
 	}
+
+	@Override
+	public int getTotalCount() {
+		return sqlSession.selectOne(nameSpace+".getTotalCount");
+	}
+	
 }
