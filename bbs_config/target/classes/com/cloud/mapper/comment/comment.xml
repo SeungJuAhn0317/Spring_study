@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cloud.bbs.dao1.CommentDao">
+	
+	<select id="test" parameterType="String" resultType="String">
+		SELECT PASS FROM LOGIN WHERE ID=#{id}
+	</select>
+	
+	<insert id="commentWrite" parameterType="comment">
+	INSERT INTO COMMENTS VALUES (comment_seq.nextval, #{id}, #{commentContent}, sysdate, #{articleNum})
+	</insert>
+	
+	<select id="getComments" parameterType="HashMap" resultType="comment">
+		SELECT COMMENTNUM, ID, COMMENTCONTENT, COMMENTDATE FROM COMMENTS
+		WHERE ARTICLENUM=#{articleNum}
+		and rownum between 1 and #{commentRow}
+		order by commentNum desc
+	</select>
+</mapper>
